@@ -1,8 +1,8 @@
-var mongoose = require("mongoose");
-const Comment = require('./comment');
+const mongoose = require('mongoose')
+const Comment = require('./comment')
 
 // SCHEMA SETUP
-var campgroundSchema = new mongoose.Schema({
+const campgroundSchema = new mongoose.Schema({
   name: String,
   price: String,
   image: String,
@@ -10,25 +10,25 @@ var campgroundSchema = new mongoose.Schema({
   author: {
     id: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "User"
+      ref: 'User',
     },
-    username: String
+    username: String,
   },
   comments: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Comment"
-    }
-  ]
-});
+      ref: 'Comment',
+    },
+  ],
+})
 
-campgroundSchema.pre('remove', async function() {
+campgroundSchema.pre('remove', async function () {
   await Comment.remove({
     _id: {
-      $in: this.comments
-    }
-  });
-  console.log("comments deleted!")
-});
+      $in: this.comments,
+    },
+  })
+  console.log('comments deleted!')
+})
 
-module.exports = mongoose.model("Campground", campgroundSchema);
+module.exports = mongoose.model('Campground', campgroundSchema)
